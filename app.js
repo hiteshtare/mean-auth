@@ -11,7 +11,10 @@ const config = require('./config/database');
 const app = express();
 
 //Connection to Database
-mongoose.connect(config.database);
+mongoose.connect(config.database, {
+  useNewUrlParser: true
+});
+
 //On connected
 mongoose.connection.on('connected', () => {
   console.log(`Connected to database : ${config.database}`);
@@ -33,7 +36,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 //Body Parser Middleware
-app.use(bodyParser());
+app.use(bodyParser.json());
+
+//Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
 
 //Users routes
 app.use('/users', userRoutes);

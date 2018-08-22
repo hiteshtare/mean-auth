@@ -18,7 +18,7 @@ router.post('/register', (req, res, next) => {
     if (err) {
       res.json({
         'success': false,
-        'message': 'Unable to register User.'
+        'message': 'Unable to register User!'
       })
     } else {
       res.json({
@@ -32,7 +32,28 @@ router.post('/register', (req, res, next) => {
 
 //Authentication
 router.post('/authentication', (req, res, next) => {
-  res.send('AUTHENTICATION');
+  let username = req.body.username;
+  let password = req.body.password;
+
+  User.getUserByUsername(username, (err, user) => {
+    if (err) {
+      res.json({
+        'success': true,
+        'message': 'Unable to verify User!'
+      });
+    }
+    if (!user) {
+      res.json({
+        'success': true,
+        'message': 'User not found!'
+      });
+    }
+
+    User.comparePassword(password, user.passpord, (err, isMatch) => {
+
+    });
+  });
+
 });
 
 //Profile
