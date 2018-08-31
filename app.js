@@ -1,3 +1,4 @@
+//Node Modules
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -5,22 +6,24 @@ const cors = require('cors');
 const path = require('path');
 const passport = require('passport');
 
+//Custom Modules
 const userRoutes = require('./routes/userRoutes');
 const config = require('./config/database');
 
+//Initialize express app
 const app = express();
 
-//Connection to Database
+//Connect to Database
 mongoose.connect(config.database, {
   useNewUrlParser: true
 });
 
-//On connected
+//On successfully connection
 mongoose.connection.on('connected', () => {
   console.log(`Connected to database : ${config.database}`);
 });
 
-//On connected
+//On connection failure
 mongoose.connection.on('error', (err) => {
   console.log(`Error occurred while Database Connection : ${err}`);
 });
@@ -42,17 +45,18 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Initialise passport
 require('./config/passport')(passport);
 
 //Users routes
 app.use('/users', userRoutes);
 
-//Index route
+//Index route (Home Page)
 app.get('/', function (req, res) {
   res.send(`Invalid Endpoint!`);
 });
 
-//Start server
+//Start express server on specified port
 app.listen(port, () => {
   console.log(`Server is running on port no: ${port}`);
 });
