@@ -34,7 +34,7 @@ router.post('/register', (req, res, next) => {
 
 });
 
-//Authentication
+//Authentication - gives back the token
 router.post('/authenticate', (req, res, next) => {
   let username = req.body.username;
   let password = req.body.password;
@@ -94,7 +94,7 @@ router.post('/authenticate', (req, res, next) => {
 
 });
 
-//Profile route protected with jwt token
+//Profile - Route protected with jwt token for access
 router.get('/profile', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {

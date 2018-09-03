@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const passport = require('passport');
+var logger = require('morgan');
 
 //Custom Modules
 const userRoutes = require('./routes/userRoutes');
@@ -31,6 +32,9 @@ mongoose.connection.on('error', (err) => {
 
 //Port number
 const port = 4000;
+
+//Enable logging using morgan
+app.use(logger('dev'));
 
 //Host static files
 app.use(express.static(path.join(__dirname, 'public')));
