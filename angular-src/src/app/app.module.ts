@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 // Core Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -25,6 +26,7 @@ import { ValidateService } from './services/validate.service';
 
 // Routing
 import { appRoutingProviders, routing } from './shared/routes/app.routing';
+import { HttpClientModule } from '@angular/common/http';
 // Routing
 
 @NgModule({
@@ -42,9 +44,10 @@ import { appRoutingProviders, routing } from './shared/routes/app.routing';
     FormsModule,
     RouterModule,
     routing,
+    HttpClientModule,
     FlashMessagesModule.forRoot()
   ],
-  providers: [appRoutingProviders, ValidateService],
+  providers: [appRoutingProviders, ValidateService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
