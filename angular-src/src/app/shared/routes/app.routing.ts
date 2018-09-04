@@ -1,7 +1,7 @@
-import { DashboardComponent } from './../../modules/dashboard/dashboard.component';
-import { RegisterComponent } from './../../modules/register/register.component';
-import { LoginComponent } from './../../modules/login/login.component';
-import { HomeComponent } from './../../modules/home/home.component';
+import { DashboardComponent } from './../../components/dashboard/dashboard.component';
+import { RegisterComponent } from './../../components/register/register.component';
+import { LoginComponent } from './../../components/login/login.component';
+import { HomeComponent } from './../../components/home/home.component';
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
