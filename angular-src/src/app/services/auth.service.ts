@@ -12,7 +12,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthService {
 
-  public url = `http://localhost:4000`;
+  // public url = `http://localhost:4000/`; //For Developement
+  public url = ``; // For Production
   public authToken: string;
   public user: User;
 
@@ -23,7 +24,7 @@ export class AuthService {
   addUser(user: User): Observable<Response> {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json; charset=utf-8');
-    return this.http.post(`${this.url}/users/register`, user, {}).pipe(map((data: Response) => {
+    return this.http.post(`${this.url}users/register`, user, {}).pipe(map((data: Response) => {
       return data;
     }));
   }
@@ -32,7 +33,7 @@ export class AuthService {
   loginUser(user): Observable<Response> {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json; charset=utf-8');
-    return this.http.post(`${this.url}/users/authenticate`, user, {}).pipe(map((data: Response) => {
+    return this.http.post(`${this.url}users/authenticate`, user, {}).pipe(map((data: Response) => {
       return data;
     }));
   }
@@ -43,7 +44,7 @@ export class AuthService {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', this.authToken);
     headers = headers.append('Content-Type', 'application/json; charset=utf-8');
-    return this.http.get(`${this.url}/users/profile`, { headers: headers }).pipe(map((data: Response) => {
+    return this.http.get(`${this.url}users/profile`, { headers: headers }).pipe(map((data: Response) => {
       return data;
     }));
   }

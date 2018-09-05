@@ -31,7 +31,7 @@ mongoose.connection.on('error', (err) => {
 
 
 //Port number
-const port = 4000;
+const port = process.env.port || 8080;
 
 //Enable logging using morgan
 app.use(logger('dev'));
@@ -59,6 +59,12 @@ app.use('/users', userRoutes);
 app.get('/', function (req, res) {
   res.send(`Invalid Endpoint!`);
 });
+
+//For any other route (Index Page)
+app.get('*', function (req, res) {
+  res.send(path.join(__dirname), 'public/index.html');
+});
+
 
 //Start express server on specified port
 app.listen(port, () => {
