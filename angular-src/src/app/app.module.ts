@@ -1,3 +1,4 @@
+import { AuthGuard } from './shared/guards/auth.guard';
 import { AuthService } from './services/auth.service';
 // Core Modules
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,6 +9,7 @@ import { RouterModule } from '@angular/router';
 
 // Other Modules
 import { FlashMessagesModule } from 'angular2-flash-messages';
+import { JwtModule } from '@auth0/angular-jwt';
 // Other Modules
 
 // Custom Components
@@ -29,6 +31,10 @@ import { appRoutingProviders, routing } from './shared/routes/app.routing';
 import { HttpClientModule } from '@angular/common/http';
 // Routing
 
+export function tokenGetter() {
+  return localStorage.getItem('id_token');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,9 +51,14 @@ import { HttpClientModule } from '@angular/common/http';
     RouterModule,
     routing,
     HttpClientModule,
-    FlashMessagesModule.forRoot()
+    FlashMessagesModule.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+      }
+    })
   ],
-  providers: [appRoutingProviders, ValidateService, AuthService],
+  providers: [appRoutingProviders, ValidateService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
