@@ -31,7 +31,7 @@ mongoose.connection.on('error', (err) => {
 
 
 //Port number
-const port = process.env.port || 8080;
+const port = process.env.PORT || 8080;
 
 //Enable logging using morgan
 app.use(logger('dev'));
