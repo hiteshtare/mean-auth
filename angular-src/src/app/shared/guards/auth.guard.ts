@@ -9,7 +9,6 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(): boolean {
-    debugger;
     // Check whether 'authToken' is empty in authService
     if (!this.authService.authToken) {
       this.authService.authToken = localStorage.getItem('id_token');

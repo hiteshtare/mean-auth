@@ -31,7 +31,7 @@ mongoose.connection.on('error', (err) => {
 
 
 //Port number
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 4500;
 
 //Enable logging using morgan
 app.use(logger('dev'));
@@ -39,7 +39,7 @@ app.use(logger('dev'));
 //Host static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Cors Middleware
+//Cors (CROSS-ORIGIN RESOURCE SHARING) Middleware
 app.use(cors());
 
 //Body Parser Middleware
@@ -54,6 +54,23 @@ require('./config/passport')(passport);
 
 //Users routes
 app.use('/users', userRoutes);
+
+//Error Handling
+app.use((req, res, next) => {
+  const error = new Error(`MEAN AUTH >> Page Not found :'(`);
+  error.status = 404;
+  next(error);
+});
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message
+    }
+  })
+});
+//Error Handling
 
 //Index route (Home Page)
 app.get('/', function (req, res) {
