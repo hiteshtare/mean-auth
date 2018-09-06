@@ -31,7 +31,8 @@ import { appRoutingProviders, routing } from './shared/routes/app.routing';
 import { HttpClientModule } from '@angular/common/http';
 // Routing
 
-export function tokenGetter() {
+// Fetch JWT token from localstorage
+export function jwtTokenGetter() {
   return localStorage.getItem('id_token');
 }
 
@@ -54,7 +55,9 @@ export function tokenGetter() {
     FlashMessagesModule.forRoot(),
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter,
+        tokenGetter: jwtTokenGetter,
+        whitelistedDomains: ['localhost:8080'],
+        authScheme: ''
       }
     })
   ],

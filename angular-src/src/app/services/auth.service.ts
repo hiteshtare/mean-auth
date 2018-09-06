@@ -12,14 +12,12 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthService {
 
-  // public url = `http://localhost:4000/`; //For Developement
+  // public url = `http://localhost:8080/`; // For Developement
   public url = ``; // For Production
   public authToken: string;
   public user: User;
 
-  constructor(private http: HttpClient, private jwtHelperService: JwtHelperService) {
-
-  }
+  constructor(private http: HttpClient, private jwtHelperService: JwtHelperService) { }
 
   addUser(user: User): Observable<Response> {
     const headers = new HttpHeaders();
@@ -42,7 +40,7 @@ export class AuthService {
   getProfile(): Observable<Response> {
     this.loadToken();
     let headers = new HttpHeaders();
-    headers = headers.append('Authorization', this.authToken);
+    // headers = headers.append('Authorization', this.authToken);
     headers = headers.append('Content-Type', 'application/json; charset=utf-8');
     return this.http.get(`${this.url}users/profile`, { headers: headers }).pipe(map((data: Response) => {
       return data;

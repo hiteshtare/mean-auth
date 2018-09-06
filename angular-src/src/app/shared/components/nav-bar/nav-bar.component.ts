@@ -10,7 +10,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor(private authService: AuthService, private flashMessagesService: FlashMessagesService, private router: Router) { }
+  constructor(public authService: AuthService, private flashMessagesService: FlashMessagesService, private router: Router) { }
 
   ngOnInit() {
   }

@@ -54,42 +54,42 @@ router.post('/authenticate', (req, res, next) => {
         success: false,
         message: 'User not found!'
       });
+    } else {
+      //User object is exist in mongo then proceed ahead with password comparision
+      User.comparePassword(password, user.password, (err, isMatch) => {
+        //Error while adding
+        if (err) {
+          throw err;
+        }
+
+        //If entered password matches with has value
+        if (isMatch) {
+
+          //Generate token with expiration and signed secret key
+          const token = jwt.sign(user.toJSON(), config.secret, {
+            expiresIn: 604800 //1 week
+          });
+
+          //Send json response including token for front end storage
+          res.json({
+            success: true,
+            token: 'JWT ' + token,
+            user: {
+              id: user._id,
+              name: user.name,
+              username: user.username,
+              email: user.email
+            }
+          });
+        } else { //If entered password does matches
+          res.json({
+            success: false,
+            message: 'Wrong Password!'
+          })
+        }
+
+      });
     }
-
-    //User object is exist in mongo then proceed ahead with password comparision
-    User.comparePassword(password, user.password, (err, isMatch) => {
-      //Error while adding
-      if (err) {
-        throw err;
-      }
-
-      //If entered password matches with has value
-      if (isMatch) {
-
-        //Generate token with expiration and signed secret key
-        const token = jwt.sign(user.toJSON(), config.secret, {
-          expiresIn: 604800 //1 week
-        });
-
-        //Send json response including token for front end storage
-        res.json({
-          success: true,
-          token: 'JWT ' + token,
-          user: {
-            id: user._id,
-            name: user.name,
-            username: user.username,
-            email: user.email
-          }
-        });
-      } else { //If entered password does matches
-        res.json({
-          success: false,
-          message: 'Wrong Password!'
-        })
-      }
-
-    });
   });
 
 });
